@@ -38,14 +38,6 @@ export default {
             });
         
     },
-    // hasVoted({ rootState, commit }, voteName) {
-    //     return axios
-    //         .get(rootState.apiURL + "user/" + localStorage.uid + "/" + voteName)
-    //         .then(function (response) {
-    //             commit("SET_VOTED", response.data);
-    //             return response.data;
-    //         });
-    // },
 
     submitVote({ rootState }, voteObj) {
         var obj = {};
@@ -54,9 +46,6 @@ export default {
         obj.userid = localStorage.uid;
         return axios
             .post(rootState.apiURL + "user/vote", obj)
-            // .then(function() {
-            //     commit("SET_VOTED", true);
-            // })  
     },
 
     getVoteCounts({ rootState, commit }, voteName) {

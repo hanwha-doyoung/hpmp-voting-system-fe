@@ -11,6 +11,7 @@ export default {
     },
     LOGOUT(state) {
         delete localStorage.uid;
+        delete localStorage.userName;
         state.isLogin = false;
         state.isLoginError = false;
     },
