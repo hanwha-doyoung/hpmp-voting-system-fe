@@ -6,7 +6,8 @@ export default {
         obj.adminId = localStorage.uid;
         obj.contractName = voteObj.voteName;
         obj.description = voteObj.description;
-        obj.proposals = voteObj.proposals
+        obj.proposals = voteObj.proposals;
+        obj.date = voteObj.date;
         return axios
             .post(
                 rootState.apiURL+"deployVote",
@@ -73,7 +74,6 @@ export default {
         return axios
         .get(rootState.apiURL+"getUserVotedInfo/"+ userid)
         .then(function(res) {
-            console.log("!!",res.data);
             commit("SET_VOTED_LIST", res.data);
         })
     },

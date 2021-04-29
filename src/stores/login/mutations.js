@@ -1,6 +1,7 @@
 export default {
     LOGIN(state, payload) {
         localStorage.uid = payload.uid;
+        localStorage.userName = payload.userName;
         state.isLogin = true;
         state.isLoginError = false;
     },

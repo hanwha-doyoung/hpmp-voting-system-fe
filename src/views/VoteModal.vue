@@ -1,5 +1,5 @@
 <template>
-    <v-dialog v-model="status" max-width="800">
+    <v-dialog v-model="status" max-width="600">
         <v-card>
             <v-col cols="12" sm="3" align="left">
                 <v-btn icon height="4vh">
@@ -7,16 +7,15 @@
                 </v-btn>
             </v-col>
             <v-card-text align="center" style="boarder-radius: 10px">
-                <h1 class="headline" style="font-weight: bold;">{{vote}} 투표</h1>
-                <div style="height: calc(100vh - 264px); margin-top:20px; overflow-y:scroll;">
-                    <v-card max-width="100%" outlined style="padding: 30px 0 30px 0;" color="rgb(245,246,250)">
-                        <v-radio-group v-model="selectedProposal">
-                            <v-radio v-for="(proposal, index) in proposals" :key="proposal" :label="proposal" v-bind:value="index+1"></v-radio>
+                <h1 class="headline" style="font-weight: bold; margin-bottom: 20px">{{vote}} 투표</h1>
+                    <v-card max-width="100%" outlined style="padding: 30px 30px 30px 30px;" color="rgb(245,246,250)">
+                        <v-list-item class="title">{{des}}</v-list-item>
+                        <v-radio-group v-model="selectedProposal" max-width="80%">
+                            <v-radio v-for="(proposal, index) in proposals" :key="proposal" :label="proposal" color="secondary" v-bind:value="index+1" style="margin-bottom: 20px;"></v-radio>
                         </v-radio-group>
                     </v-card>
                     <v-spacer style="padding:5px 0 5px 0;"/>
-                </div>
-                <v-btn @click="submitVote()">투표하기</v-btn>
+                <v-btn width="85%" rounded large style="border-radius: 10px; font-size: large; font-weight: bold" @click="submitVote()">투표하기</v-btn>
             </v-card-text>
         </v-card>
     </v-dialog>
@@ -31,6 +30,7 @@ import { mapState } from 'vuex';
         computed: {
             ...mapState({
                 vote: state => state.vote.vote,
+                des: state => state.vote.desc,
                 proposals: state => state.vote.proposals,
             }),
             status: {
@@ -65,3 +65,9 @@ import { mapState } from 'vuex';
         
     }
 </script>
+
+<style>
+    .proposal{
+        font-size: 20px;
+    }
+</style>

@@ -9,7 +9,7 @@ const state = {
     voted: false,
     votedList: {},
     voteResult: [],
-    colors: ["#41B883", "#E46651", "#00D8FF", "#ffc500", "#fdc0c0"],
+    colors: ["#FF9CA8", "#FA7089", "#FFF5D1", "#FFCB97", "#C4D18B"],
     count: 0,
 };
 

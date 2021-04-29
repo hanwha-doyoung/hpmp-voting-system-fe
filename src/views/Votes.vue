@@ -8,14 +8,14 @@
                     </v-flex>
                     <v-flex>
                         <v-list-item v-if="userName">
-                            <v-list-item-avatar width="12vh" style="margin: 0" height="80px">
-                                <v-avatar size="60px" color="indigo">
-                                    <span class="white--text headline" v-if="userName">{{ userName.charAt(0) }}</span>
+                            <v-list-item-avatar width="12vh" style="margin: 0" height="120px">
+                                <v-avatar size="80px" color="#a76666">
+                                    <span class="white--text headline" v-if="userName" style="font-size: x-large; font-weight: bold">{{ userName.charAt(0) }}</span>
                                 </v-avatar>
                             </v-list-item-avatar>
                             <v-list-item-content>
                                 <v-list-item-subtitle class="headline">
-                                    <span style="font-weight: bold">{{ userName }} </span>
+                                    <span style="font-weight: bold; font-size: xx-large">{{ userName }} </span>
                                 </v-list-item-subtitle>
                             </v-list-item-content>
 
@@ -27,11 +27,9 @@
                 </v-layout>
             </v-card>
             <div style="height: calc(100vh - 264px); overflow-y:scroll;">
-                <div style="padding: 0 0 5px 10px">
-                    <h3>등록된 투표</h3>
-                </div>
+
                 <span v-for="vote in allVotes" v-bind:key="vote.votename">
-                    <v-card max-width="100%" outlined style="padding: 20px 0 20px 0;" v-bind:style="[votedList[vote.votename]==='false' ? {'background':'#87cefa'} : {'background':'rgb(245,246,250)'}]" @click="hasVoted(vote.votename, vote.description)">
+                    <v-card max-width="100%" outlined style="padding: 20px 0 20px 0;" v-bind:style="[votedList[vote.votename]==='true' ? {'background':'#999999'} : {'background':'rgb(245,246,250)'}]" @click="hasVoted(vote.votename, vote.description)">
                         <v-list-item>
                             <v-list-item-content>
                                 <v-list-item-title class="title">{{ vote.votename }}</v-list-item-title>
@@ -41,9 +39,19 @@
                                 <v-list-item-title class="title">{{vote.count}}/10</v-list-item-title>
                             </v-list-item-content>
                         </v-list-item>
-                        <div style="margin-left: 10px">
-                            <v-chip small v-if="votedList[vote.votename] === 'true'" class="ma-2" color="info">투표 완료</v-chip>
-                        </div>
+                        <v-list-item style="padding-left: unset">
+                            <v-chip align="left" small v-if="votedList[vote.votename] === 'true'" class="ma-2" color="#dfc8c8" text-color="#a76666" style="font-weight: bold;">
+                                <v-avatar left>
+                                  <v-icon>mdi-checkbox-marked-circle</v-icon>
+                                </v-avatar>
+                                투표 완료
+                            </v-chip>
+                            <v-list-item-content>
+                                <v-list-item-subtitle align="right" class="subtitle">투표 마감일: {{trim(vote.end)}}</v-list-item-subtitle>
+                            </v-list-item-content>
+
+                        </v-list-item>
+
                     </v-card>
                     <v-spacer style="padding:2px 0 2px 0;"/>
                 </span>
@@ -80,22 +88,21 @@
             }
         },
         methods: {
+            trim: function(date) {
+              return date.substr(0, 10);
+            },
             modalOn : function(votename, desc) {
                 this.$store.commit('vote/SET_VOTE', votename);
                 this.$store.commit('vote/SET_VOTE_DESC', desc);
                 this.$store.dispatch('common/setModalResult', 'on');
             },
             hasVoted(votename, desc) {
-                // this.$store.dispatch('vote/hasVoted', votename)
-                // .then((response) => {
-                    if(this.$store.getters['common/isAdmin'] || this.votedList[votename]==='true') {
-                        this.modalOn(votename, desc);
-                    } else {
-                        this.votingModalOn(votename, desc);
-                        // response ? this.modalOn(votename, desc) : this.votingModalOn(votename, desc);
-                    }
-                // });
-            }, 
+                if(this.$store.getters['common/isAdmin'] || this.votedList[votename]==='true') {
+                    this.modalOn(votename, desc);
+                } else {
+                    this.votingModalOn(votename, desc);
+                }
+            },
             votingModalOn : function(votename, desc) {
                 this.$store.commit('vote/SET_VOTE', votename);
                 this.$store.commit('vote/SET_VOTE_DESC', desc);
@@ -107,22 +114,8 @@
             
         },
         created() { 
-            // const t = this;
             this.$store.dispatch('vote/getAllVotes');
             this.$store.dispatch('vote/getUserVotedInfo', this.userId);
-            // .then(function() {
-            //     t.localVotes = t.$store.getters['vote/getVotes'];
-            //     // for(let i=0; i<t.localVotes.length; i++) {
-            //         t.$store.dispatch('vote/hasVoted', t.localVotes[0].votename)
-            //         .then(function(res) {
-            //             let k = t.localVotes[0].votename;
-            //             t.test[k] = res;
-            //     //         console.log(t.test);
-            //     //         // t.$store.commit("vote/SET_VOTED_LIST", t.test);
-            //     //         // console.log(t.$store.getters['vote/getVotedList']);
-            //         })
-            //     // }
-            // })
         }
     };
 </script>

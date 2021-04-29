@@ -9,14 +9,14 @@
             <v-list-item-group v-if="user">
                 <v-list-item>
                     <v-row justify="space-around">
-                        <v-avatar color="indigo">
-                            <span class="white--text headline" v-if="user">{{ user.charAt(0) }}</span>
+                        <v-avatar color="#a76666">
+                            <span class="white--text headline" style="font-size: x-large; font-weight: bold" v-if="user">{{ user.charAt(0) }}</span>
                         </v-avatar>
                     </v-row>
                 </v-list-item>
                 <v-list-item>
                     <v-list-item-content>
-                        <v-list-item-title align="center" class="title">{{ user }}</v-list-item-title>
+                        <v-list-item-title align="center" style="font-weight: bold; font-size: xx-large">{{ user }}</v-list-item-title>
                     </v-list-item-content>
                 </v-list-item>
             </v-list-item-group>
@@ -25,9 +25,9 @@
         <v-container fluid style="padding: 6% 10% 0 10%">
             <v-layout column>
                 <v-row class="text-center" v-if="showCreate">
-                    <v-btn depressed height="60" block @click.stop="goNextStep('create')">
+                    <v-btn depressed height="60" style="margin-top: 20px" block @click.stop="goNextStep('create')">
                         <v-img src='@/assets/create.png'></v-img>
-                        <div style=" width: 100%; font-weight: bold; padding-right:40px;">투표 생성</div>
+                        <div style=" width: 100%; font-size:large; font-weight: bold; padding-right:40px;">투표 생성</div>
                     </v-btn>
                 </v-row>
                 <v-container v-if="showCreate" style="padding-top: 6px"/>

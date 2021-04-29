@@ -1,5 +1,5 @@
 <template>
-    <v-dialog v-model="status" max-width="800">
+    <v-dialog v-model="status" max-width="600">
         <v-card>
             <v-col cols="12" sm="3" align="left">
                 <v-btn icon height="4vh">
@@ -7,9 +7,12 @@
                 </v-btn>
             </v-col>
             <v-card-text align="center" style="boarder-radius: 10px">
-                <h1 class="headline" style="font-weight: bold;">{{vote}} 결과</h1>
+                <h1 class="headline" style="font-weight: bold;">{{vote}} 결과 화면</h1>
                 <h3 class="subtitle">{{desc}}</h3>
-                <pie-chart v-if="checkData()" ref="pieChart" :chart-data="chartData" :options="chartOptions"/>
+                <v-card max-width="100%" outlined style="padding: 30px 30px 30px 30px;" color="rgb(245,246,250)">
+                    <pie-chart v-if="checkData()" ref="pieChart" :chart-data="chartData" :options="chartOptions"/>
+                </v-card>
+
             </v-card-text>
         </v-card>
     </v-dialog>
@@ -57,7 +60,7 @@ import PieChart from "./PieChart";
             return {
                 chartOptions: {
                     // borderWidth: "10px",
-                    hoverBackgroundColor: "red",
+                    hoverBackgroundColor: "black",
                     // hoverBorderWidth: "10px",
                     legend: {
                         display: true,
@@ -65,7 +68,7 @@ import PieChart from "./PieChart";
                     }
                 },
                 chartData: {
-                    hoverBackgroundColor: "red",
+                    hoverBackgroundColor: "black",
                     hoverBorderWidth: 10,
                     datasets: [
                         {
@@ -86,8 +89,7 @@ import PieChart from "./PieChart";
                 return this.$store.getters['common/modalResult'];
             },
             checkData: function() {
-                console.log("check data");
-                if(this.chartData.datasets[0].data != [null] 
+                if(this.chartData.datasets[0].data != [null]
                 && this.chartData.labels != [null] 
                 && this.chartData.datasets[0].backgroundColor != [null]) {
                     return true;
