@@ -35,7 +35,6 @@ import PieChart from "./PieChart";
                 proposals: state => state.vote.proposals,
                 results: state => state.vote.voteResult,
                 status: state => state.common.modal_result,
-                colors: state => state.vote.colors,
             }),
         },
         watch: {
@@ -59,9 +58,9 @@ import PieChart from "./PieChart";
         data() {
             return {
                 chartOptions: {
-                    // borderWidth: "10px",
+                    borderWidth: "10px",
                     hoverBackgroundColor: "black",
-                    // hoverBorderWidth: "10px",
+                    hoverBorderWidth: "10px",
                     legend: {
                         display: true,
                         position: 'bottom',
@@ -89,9 +88,9 @@ import PieChart from "./PieChart";
                 return this.$store.getters['common/modalResult'];
             },
             checkData: function() {
-                if(this.chartData.datasets[0].data != [null]
-                && this.chartData.labels != [null] 
-                && this.chartData.datasets[0].backgroundColor != [null]) {
+                if(this.chartData.datasets[0].data !== [null]
+                && this.chartData.labels !== [null]
+                && this.chartData.datasets[0].backgroundColor !== [null]) {
                     return true;
                 } else {
                     return false;
@@ -107,22 +106,21 @@ import PieChart from "./PieChart";
             },
             setLabels: function() {
                 this.$set(this.chartData, 'labels', this.proposals);
-                // this.chartData.labels = this.proposals;
             },
             setDatasets: function() {
                 let list = [];
                 for(let i=0; i<this.results.length; i++) {
                     list.push(Number(this.results[i]));
                 }
-                // this.chartData.datasets[0].data = list;
                 this.$set(this.chartData.datasets[0], 'data', list);
             },
             setColors: function() {
                 let list = [];
+                let c = ['#FF9CA8', '#FA7089', '#FFF5D1', '#FFCB97', '#C4D18B'];
+
                 for(let i=0; i<this.results.length; i++) {
-                    list.push(this.colors[i]);
+                    list.push(c[i]);
                 }
-                // this.chartData.datasets[0].backgroundColor = list;
                 this.$set(this.chartData.datasets[0], 'backgroundColor', list);
             }
         },
